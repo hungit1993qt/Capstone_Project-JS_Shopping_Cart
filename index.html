@@ -117,7 +117,16 @@
 				<div class="modal-body">
 
 					<form role="form">
-
+						<div style="display:none" class="form-group">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text"><i class="fa fa-address-book"></i></span>
+								</div>
+								<input type="number" name="id" id="id" class="form-control input-sm"
+									placeholder="Name Product">
+							</div>
+							<span class="sp-thongbao" id="tbName"></span>
+						</div>
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
@@ -203,8 +212,8 @@
 									<span class="input-group-text"><i class="fa fa-briefcase"></i></span>
 								</div>
 								<select class="form-control" id="type">
-									<option value="Iphone">Iphone</option>
-									<option value="SamSung">SamSung</option>
+									<option value="iphone">Iphone</option>
+									<option value="samsung">SamSung</option>
 								</select>
 							</div>
 
@@ -228,7 +237,7 @@
 				<!-- Modal footer -->
 				<div class="modal-footer" id="modal-footer">
 					<button id="btnThemNV" onclick="createProduct()" type="button" class="btn btn-success">Add Product</button>
-					<button id="btnCapNhat"  style="display:none" type="button"
+					<button id="btnCapNhat" onclick="updateProduct()" style="display:none" type="button"
 						class="btn btn-success">Update Product</button>
 					<button type="reset" class="btn btn-danger" onclick="resetForm()" id="btnReset">Clean</button>
 					<button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
