@@ -3,6 +3,8 @@ let listProduct = [];
 
 
 let createProduct = async ()=> {
+    let isFormValidate =  validateInput();
+    if(!isFormValidate) return;
     let name = document.getElementById("name").value;
     let price = document.getElementById("price").value;
     let screen = document.getElementById("screen").value;
@@ -147,4 +149,44 @@ let resetForm = function (){
 };
 getProductAPI();
 
+let validateInput = function(){
+    let name = document.getElementById("name").value;
+    let price = document.getElementById("price").value;
+    let screen = document.getElementById("screen").value;
+    let backCamera = document.getElementById("backCamera").value ;
+    let frontCamera = document.getElementById("frontCamera").value;
+    let img = document.getElementById("img").value;
+    let desc = document.getElementById("desc").value;
+    let type = document.getElementById("type").value;
+    let quantity = document.getElementById("quantity").value;
+    let testname = /^[A-z ]+$/g;
+    let testEmail = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/;
+    let testPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,10}$/;
+    let testDatePicker = /^(0[1-9]|1[0-2])[\/](0[1-9]|[12]\d|3[01])[\/](19|20)\d{2}$/;
+    let isValid = true;
+    isValid &= require(name,"tbName");
+    isValid &= require(price,"tbPrice");
+    isValid &= require(screen,"tbScreen");
+    isValid &= require(backCamera,"tbbackCamera");
+    isValid &= require(frontCamera,"tbfrontCamera");
+    isValid &= require(img,"tbImg");
+    isValid &= require(desc,"tbDesc");
+    isValid &= require(type,"tbType");
+    isValid &= require(quantity,"tbQuantity");
+
+
+    
+    return isValid;
+};
+
+// Required
+let require = function(val,spanId){
+    if(!val){
+        document.getElementById(spanId).innerHTML = "* This field is required";
+        document.getElementById(spanId).style.display="block";
+        return false;
+    }
+    document.getElementById(spanId).innerHTML = "";
+    return true;
+};
 
