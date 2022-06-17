@@ -84,8 +84,8 @@ const renderProductList = function (data) {
             <img style="width:200px;height:200px" src=${data[i].img} /></br>
             <h6 class="p-3">${fPrice(data[i].price)}</h6>
             <p>
-            <em onclick = "getInfoProduct(${data[i].id})" data-toggle="modal" data-target="#myModal" class="fa fa-info-circle display-4 p-3">
-            </em> <em onclick = "addCard(${data[i].id})" class="fa fa-shopping-cart display-4 p-3"></em>
+            <em style="cursor: pointer;" onclick = "getInfoProduct(${data[i].id})" data-toggle="modal" data-target="#myModal" class="fa fa-info-circle display-4 p-3">
+            </em> <em style="cursor: pointer;" onclick = "addCard(${data[i].id})" class="fa fa-shopping-cart display-4 p-3"></em>
             </p>
             
         </div>`;
@@ -113,38 +113,75 @@ let getData = function () {
         Card = JSON.parse(cardListJSON);
 
     }
+    renderCard(Card);
 };
-let addCard = function (id) {
-    let index  = +id;
-    if (Card.length !== 0) {
-        for (let i = 0; i < Card.length; i++) {
-            if (Card[i].id === index) {
-                Card[i].quantity = Card[i].quantity + 1;
-                return;
-            } 
-            if(Card[i].id !== index){
-                Card.push({ id: index, quantity: 1 });
-                return;
-            }
-        }
+let addCard = async (id) => {
+
+    let Products = await axios.get(`${URL_API}/${id}`);
+    let index = Card.findIndex((item) => item.id === +id)
+    if (index === -1) {
+        Card.push({ id, Products, quantity: 1 });
     } else {
-        Card.push({ id: index, quantity: 1 });
+        Card[index].quantity += 1;
     }
     console.log(Card);
+    saveData();
+    renderCard(Card);
+
+}
+let changQuantity = async (id, number) => {
+    console.log(number);
+    let index = Card.findIndex((item) => item.id === +id);
+    if (index !== -1) {
+        Card[index].quantity += number;
+    }
+    renderCard(Card);
+    saveData();
+}
+let deleteCard = (id)=>{
+    let index = Card.findIndex((item) => item.id === +id);
+    if(index !== -1){
+        Card.splice([index],1);
+    }
+    saveData();
+    renderCard(Card);
+}
+let paymentCard = ()=>{
+    
 }
 
-let mapData = function (dataFromLocal) {
-    let data = [];
-    for (let i = 0; i < dataFromLocal.length; i++) {
-        let currentStaff = dataFromLocal[i];
-        const mappedStaff = new Product(
-            currentStaff.id,
-            currentStaff.quantity
-        );
-        data.push(mappedStaff);
-    };
-    return data;
-};
+let renderCard = async (Card) => {
+    let CardHTML = '';
+    let totalQuantity = 0;
+    let totalPrice = 0;
+    if (Card.length !== 0) {
+        for (let i = 0; i < Card.length; i++) {
+            totalQuantity += Card[i].quantity;
+            totalPrice += Card[i].Products.data.price * Card[i].quantity;
+            CardHTML += `
+            <tr>
+                <td style="vertical-align: middle;">${i + 1}</td>
+                <td style="vertical-align: middle;">${Card[i].Products.data.name}</td>
+                <td style="vertical-align: middle;">${fPrice(Card[i].Products.data.price)}</td>
+                <td style="vertical-align: middle;"><img style="width:100px" src=${Card[i].Products.data.img} /></td>
+                <td style="vertical-align: middle;"><em style="cursor: pointer;" onclick = "changQuantity(${Card[i].id},${-1})" class="fa fa-minus"></em> ${Card[i].quantity} <em style="cursor: pointer;" onclick = "changQuantity(${Card[i].id},${1})" class="fa fa-plus"></em></td>
+                <td style="vertical-align: middle;">${fPrice(Card[i].Products.data.price * Card[i].quantity)}</td>
+                <td style="vertical-align: middle;"> <em style="cursor: pointer; font-size:30px" onclick = "deleteCard(${Card[i].id})" class="fa fa-trash"></em></td>
+                                         
+            </tr>
+            `;
+        }
+        CardHTML += `
+        <tr>
+         <td style="vertical-align: middle;" colspan = "4">Total</td>
+         <td style="vertical-align: middle;">${totalQuantity}</td>
+         <td style="vertical-align: middle;">${fPrice(totalPrice)}</td>
+         <td style="vertical-align: middle;"><i onclick="" style="cursor: pointer; font-size:30px" class="fa fa-money" aria-hidden="true"></br>Payment</i></td>
+         </tr>`;
+        document.getElementById("tableCard").innerHTML = CardHTML;
+    }
+}
+
 getData();
 getProductAPI();
 
