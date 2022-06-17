@@ -60,27 +60,14 @@
 								</div>
 							</div>
 						</div>
-						<table class="table table-bordered table-hover myTable">
-							<thead class="text-primary">
-								<tr>
-									<th class="nowrap">
-										<span class="mr-1">STT</span>
-										<i class="fa fa-arrow-up" id="SapXepTang"></i>
-										<i class="fa fa-arrow-down" id="SapXepGiam"></i>
-									</th>
-									<th>Name Product</th>
-									<th>Price</th>
-									<th>Screen</th>
-									<th>Picture</th>
-									<th>Type</th>
-									<th>Quantity</th>
-									<th><em class="fa fa-cog"></em></th>
-								</tr>
-							</thead>
-							<tbody id="tableDanhSach">
-
-							</tbody>
-						</table>
+						
+							<div class="container">
+								<div class="row row-cols-3" id="listProduct">
+									
+									
+								</div>
+							</div>
+						
 					</div>
 
 					<!-- Footer -->
@@ -104,7 +91,7 @@
 			<div class="modal-content">
 
 				<header class="head-form mb-0">
-					<h2 id="header-title">NEW PRODUCT</h2>
+					<h2 id="header-title">PRODUCT DETAIL</h2>
 				</header>
 
 				<!-- Modal Header -->
@@ -122,7 +109,7 @@
 								<div class="input-group-prepend">
 									<span class="input-group-text"><i class="fa fa-address-book"></i></span>
 								</div>
-								<input type="number" name="id" id="id" class="form-control input-sm"
+								<input disabled type="number" name="id" id="id" class="form-control input-sm"
 									placeholder="Name Product">
 							</div>
 							<span class="sp-thongbao" id="tbNamedd"></span>
@@ -130,9 +117,9 @@
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-address-book"></i></span>
+									<span class="input-group-text">Name</i></span>
 								</div>
-								<input type="text" name="name" id="name" class="form-control input-sm"
+								<input disabled type="text" name="name" id="name" class="form-control input-sm"
 									placeholder="Name Product">
 							</div>
 							<span class="sp-thongbao" id="tbName"></span>
@@ -141,9 +128,9 @@
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-envelope"></i></span>
+									<span class="input-group-text">Price</i></span>
 								</div>
-								<input type="number" name="price" id="price" class="form-control input-sm"
+								<input disabled type="number" name="price" id="price" class="form-control input-sm"
 									placeholder="Price">
 							</div>
 
@@ -153,9 +140,9 @@
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-key"></i></span>
+									<span class="input-group-text">Screen</i></span>
 								</div>
-								<input type="text" name="screen" id="screen" class="form-control input-sm"
+								<input disabled type="text" name="screen" id="screen" class="form-control input-sm"
 									placeholder="Screen">
 							</div>
 							<span class="sp-thongbao" id="tbScreen"></span>
@@ -164,9 +151,9 @@
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-calendar"></i></span>
+									<span class="input-group-text">Back Camera</i></span>
 								</div>
-								<input type="text" name="backCamera" id="backCamera" class="form-control"
+								<input disabled type="text" name="backCamera" id="backCamera" class="form-control"
 									placeholder="Back camera">
 							</div>
 
@@ -176,9 +163,9 @@
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-money" aria-hidden="true"></i></span>
+									<span class="input-group-text">Front Camera</i></span>
 								</div>
-								<input type="text" name="frontCamera" id="frontCamera" class="form-control input-sm"
+								<input disabled type="text" name="frontCamera" id="frontCamera" class="form-control input-sm"
 									placeholder="Front camera">
 							</div>
 							<span class="sp-thongbao" id="tbfrontCamera"></span>
@@ -186,11 +173,10 @@
 
 						<div class="form-group">
 							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-money" aria-hidden="true"></i></span>
+								<div class="input-group-prepend">									
 								</div>
-								<input type="text" name="img" id="img" class="form-control input-sm"
-									placeholder="Link Picture">
+								<p id="img">		
+								</p>
 							</div>
 							<span class="sp-thongbao" id="tbImg"></span>
 						</div>
@@ -198,9 +184,9 @@
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-money" aria-hidden="true"></i></span>
+									<span class="input-group-text"></i>Descrition</span>
 								</div>
-								<input type="text" name="desc" id="desc" class="form-control input-sm"
+								<input disabled type="text" name="desc" id="desc" class="form-control input-sm"
 									placeholder="Descrition">
 							</div>
 							<span class="sp-thongbao" id="tbDesc"></span>
@@ -209,12 +195,10 @@
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-briefcase"></i></span>
+									<span class="input-group-text">Type</span>
 								</div>
-								<select class="form-control" id="type">
-									<option value="iphone">Iphone</option>
-									<option value="samsung">SamSung</option>
-								</select>
+								<input disabled type="text" class="form-control" id="type">
+								
 							</div>
 
 							<span class="sp-thongbao" id="tbType"></span>
@@ -222,10 +206,9 @@
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-clock-o"
-											aria-hidden="true"></i></span>
+									<span class="input-group-text">Quantity</span>
 								</div>
-								<input type="number" name="quantity" id="quantity" class="form-control input-sm"
+								<input disabled type="number" name="quantity" id="quantity" class="form-control input-sm"
 									placeholder="Quantity">
 							</div>
 							<span class="sp-thongbao" id="tbQuantity"></span>
@@ -236,10 +219,10 @@
 
 				<!-- Modal footer -->
 				<div class="modal-footer" id="modal-footer">
-					<button id="btnThemNV" onclick="createProduct()" type="button" class="btn btn-success">Add Product</button>
+					<button id="btnThemNV" onclick="createProduct()" type="button" class="btn btn-success">Add
+						Product</button>
 					<button id="btnCapNhat" onclick="updateProduct()" style="display:none" type="button"
-						class="btn btn-success">Update Product</button>
-					<button type="reset" class="btn btn-danger" onclick="resetForm()" id="btnReset">Clean</button>
+						class="btn btn-success">Add card</button>
 					<button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 				</div>
 
@@ -267,7 +250,7 @@
 		integrity="sha512-xIPqqrfvUAc/Cspuj7Bq0UtHNo/5qkdyngx6Vwt+tmbvTLDszzXM0G6c91LXmGrRx8KEPulT+AfOOez+TeVylg=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="./models/product.js"></script>
-	<script src="./js/index.js"></script>
+	<script src="./js/client.js"></script>
 </body>
 
 </html>
