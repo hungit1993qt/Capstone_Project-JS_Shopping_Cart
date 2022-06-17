@@ -79,15 +79,16 @@ const renderProductList = function (data) {
     let productListHTML = '';
     for (let i = 0; i < data.length; i++) {
         productListHTML += `
-        <div class="col border border-info">
-            <h4 class="p-3">${data[i].name}<h4>
-            <img style="width:200px;height:200px" src=${data[i].img} /></br>
-            <h6 class="p-3">${fPrice(data[i].price)}</h6>
-            <p>
-            <em style="cursor: pointer;" onclick = "getInfoProduct(${data[i].id})" data-toggle="modal" data-target="#myModal" class="fa fa-info-circle display-4 p-3">
-            </em> <em style="cursor: pointer;" onclick = "addCard(${data[i].id})" class="fa fa-shopping-cart display-4 p-3"></em>
-            </p>
-            
+        <div class="col-sm-4 p-2">
+            <div class=" border border-info ">
+                <h4 class="p-3">${data[i].name}<h4>
+                <img style="width:200px;height:200px" src=${data[i].img} /></br>
+                <h6 class="p-3">${fPrice(data[i].price)}</h6>
+                <p>
+                <em style="cursor: pointer;" onclick = "getInfoProduct(${data[i].id})" data-toggle="modal" data-target="#myModal" class="fa fa-info-circle display-4 p-3">
+                </em> <em style="cursor: pointer;" onclick = "addCard(${data[i].id})" class="fa fa-shopping-cart display-4 p-3"></em>
+                </p>
+            </div>
         </div>`;
     }
     document.getElementById("listProduct").innerHTML = productListHTML;
@@ -181,7 +182,7 @@ let renderCard = async (Card) => {
          <td style="vertical-align: middle;"><i onclick="paymentCard()" style="cursor: pointer; font-size:30px" class="fa fa-money" aria-hidden="true"></br>Payment</i></td>
          </tr>`;
         document.getElementById("tableCard").innerHTML = CardHTML;
-    }else{
+    } else {
         document.getElementById("tableCard").innerHTML = CardHTML;
     }
 }
