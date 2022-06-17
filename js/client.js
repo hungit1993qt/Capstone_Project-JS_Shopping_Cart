@@ -102,17 +102,7 @@ let resetForm = function () {
 };
 
 
-let addCard = function (id) {
-    if (Card.id === id) {
-        Card[id].push({quantity:quantity++});
-        saveData();
-        console.log(Card);
-    } else {
-        Card.push({id:id,quantity:1});
-        saveData();
-        console.log(Card);
-    }
-}
+
 let saveData = function () {
     let cardListJSON = JSON.stringify(Card);
     localStorage.setItem("listCard", cardListJSON);
@@ -120,15 +110,34 @@ let saveData = function () {
 let getData = function () {
     let cardListJSON = localStorage.getItem("listCard");
     if (cardListJSON) {
-        Card = mapData(JSON.parse(cardListJSON));
-        
+        Card = JSON.parse(cardListJSON);
+
     }
 };
+let addCard = function (id) {
+    let index  = +id;
+    if (Card.length !== 0) {
+        for (let i = 0; i < Card.length; i++) {
+            if (Card[i].id === index) {
+                Card[i].quantity = Card[i].quantity + 1;
+                return;
+            } 
+            if(Card[i].id !== index){
+                Card.push({ id: index, quantity: 1 });
+                return;
+            }
+        }
+    } else {
+        Card.push({ id: index, quantity: 1 });
+    }
+    console.log(Card);
+}
+
 let mapData = function (dataFromLocal) {
     let data = [];
     for (let i = 0; i < dataFromLocal.length; i++) {
         let currentStaff = dataFromLocal[i];
-        const mappedStaff = new Card(
+        const mappedStaff = new Product(
             currentStaff.id,
             currentStaff.quantity
         );
@@ -137,7 +146,6 @@ let mapData = function (dataFromLocal) {
     return data;
 };
 getData();
-console.log(Card)
 getProductAPI();
 
 
