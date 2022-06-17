@@ -138,16 +138,18 @@ let changQuantity = async (id, number) => {
     renderCard(Card);
     saveData();
 }
-let deleteCard = (id)=>{
+let deleteCard = (id) => {
     let index = Card.findIndex((item) => item.id === +id);
-    if(index !== -1){
-        Card.splice([index],1);
+    if (index !== -1) {
+        Card.splice([index], 1);
     }
     saveData();
     renderCard(Card);
 }
-let paymentCard = ()=>{
-    
+let paymentCard = () => {
+    Card = [];
+    saveData();
+    renderCard(Card);
 }
 
 let renderCard = async (Card) => {
@@ -176,8 +178,10 @@ let renderCard = async (Card) => {
          <td style="vertical-align: middle;" colspan = "4">Total</td>
          <td style="vertical-align: middle;">${totalQuantity}</td>
          <td style="vertical-align: middle;">${fPrice(totalPrice)}</td>
-         <td style="vertical-align: middle;"><i onclick="" style="cursor: pointer; font-size:30px" class="fa fa-money" aria-hidden="true"></br>Payment</i></td>
+         <td style="vertical-align: middle;"><i onclick="paymentCard()" style="cursor: pointer; font-size:30px" class="fa fa-money" aria-hidden="true"></br>Payment</i></td>
          </tr>`;
+        document.getElementById("tableCard").innerHTML = CardHTML;
+    }else{
         document.getElementById("tableCard").innerHTML = CardHTML;
     }
 }
