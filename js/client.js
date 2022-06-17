@@ -1,28 +1,8 @@
 const URL_API = "https://5bd2959ac8f9e400130cb7e9.mockapi.io/api/products";
 let listProduct = [];
+let Card = [];
 
 
-let createProduct = async () => {
-    let isFormValidate = validateInput();
-    if (!isFormValidate) return;
-    let name = document.getElementById("name").value;
-    let price = document.getElementById("price").value;
-    let screen = document.getElementById("screen").value;
-    let backCamera = document.getElementById("backCamera").value;
-    let frontCamera = document.getElementById("frontCamera").value;
-    let img = document.getElementById("img").value;
-    let desc = document.getElementById("desc").value;
-    let type = document.getElementById("type").value;
-    let quantity = document.getElementById("quantity").value;
-    let newProduct = new Product(name, price, screen, backCamera, frontCamera, img, desc, type, '', quantity);
-    await axios.post(URL_API, newProduct);
-    getProductAPI();
-    resetForm();
-}
-const deleteProduct = async (id) => {
-    await axios.delete(`${URL_API}/${id}`);
-    getProductAPI();
-}
 const getProductAPI = async () => {
     try {
         const response = await axios.get(URL_API);
@@ -72,39 +52,7 @@ const getInfoProduct = async (id) => {
 
 }
 
-const updateProduct = async () => {
-    let name = document.getElementById("name").value;
-    let price = document.getElementById("price").value;
-    let screen = document.getElementById("screen").value;
-    let backCamera = document.getElementById("backCamera").value;
-    let frontCamera = document.getElementById("frontCamera").value;
-    let img = document.getElementById("img").value;
-    let desc = document.getElementById("desc").value;
-    let type = document.getElementById("type").value;
-    let id = document.getElementById("id").value;
-    let quantity = document.getElementById("quantity").value;
-    let index = findById(id);
-    if (index === -1) {
-        alert("Not find");
-        return;
-    }
-    const updatedProduct = {
-        "name": name,
-        "price": price,
-        "screen": screen,
-        "backCamera": backCamera,
-        "frontCamera": frontCamera,
-        "img": img,
-        "desc": desc,
-        "type": type,
-        "quantity": quantity,
-    }
-    await axios.put(`${URL_API}/${id}`, updatedProduct);
-    resetForm();
-    getProductAPI();
-    document.getElementById("btnDong").click();
 
-};
 
 let findProductType = async () => {
     let keyWord = document.getElementById("searchType").value.toLowerCase();
@@ -137,7 +85,7 @@ const renderProductList = function (data) {
             <h6 class="p-3">${fPrice(data[i].price)}</h6>
             <p>
             <em onclick = "getInfoProduct(${data[i].id})" data-toggle="modal" data-target="#myModal" class="fa fa-info-circle display-4 p-3">
-            </em> <em onclick = "deleteProduct(${data[i].id})" class="fa fa-shopping-cart display-4 p-3"></em>
+            </em> <em onclick = "addCard(${data[i].id})" class="fa fa-shopping-cart display-4 p-3"></em>
             </p>
             
         </div>`;
@@ -152,46 +100,44 @@ let resetForm = function () {
     document.getElementById("btnCapNhat").style.display = "none";
     document.getElementById("header-title").innerHTML = "NEW PRODUCT";
 };
+
+
+let addCard = function (id) {
+    if (Card.id === id) {
+        Card[id].push({quantity:quantity++});
+        saveData();
+        console.log(Card);
+    } else {
+        Card.push({id:id,quantity:1});
+        saveData();
+        console.log(Card);
+    }
+}
+let saveData = function () {
+    let cardListJSON = JSON.stringify(Card);
+    localStorage.setItem("listCard", cardListJSON);
+};
+let getData = function () {
+    let cardListJSON = localStorage.getItem("listCard");
+    if (cardListJSON) {
+        Card = mapData(JSON.parse(cardListJSON));
+        
+    }
+};
+let mapData = function (dataFromLocal) {
+    let data = [];
+    for (let i = 0; i < dataFromLocal.length; i++) {
+        let currentStaff = dataFromLocal[i];
+        const mappedStaff = new Card(
+            currentStaff.id,
+            currentStaff.quantity
+        );
+        data.push(mappedStaff);
+    };
+    return data;
+};
+getData();
+console.log(Card)
 getProductAPI();
 
-let validateInput = function () {
-    let name = document.getElementById("name").value;
-    let price = document.getElementById("price").value;
-    let screen = document.getElementById("screen").value;
-    let backCamera = document.getElementById("backCamera").value;
-    let frontCamera = document.getElementById("frontCamera").value;
-    let img = document.getElementById("img").value;
-    let desc = document.getElementById("desc").value;
-    let type = document.getElementById("type").value;
-    let quantity = document.getElementById("quantity").value;
-    let testname = /^[A-z ]+$/g;
-    let testEmail = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/;
-    let testPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,10}$/;
-    let testDatePicker = /^(0[1-9]|1[0-2])[\/](0[1-9]|[12]\d|3[01])[\/](19|20)\d{2}$/;
-    let isValid = true;
-    isValid &= require(name, "tbName");
-    isValid &= require(price, "tbPrice");
-    isValid &= require(screen, "tbScreen");
-    isValid &= require(backCamera, "tbbackCamera");
-    isValid &= require(frontCamera, "tbfrontCamera");
-    isValid &= require(img, "tbImg");
-    isValid &= require(desc, "tbDesc");
-    isValid &= require(type, "tbType");
-    isValid &= require(quantity, "tbQuantity");
-
-
-
-    return isValid;
-};
-
-// Required
-let require = function (val, spanId) {
-    if (!val) {
-        document.getElementById(spanId).innerHTML = "* This field is required";
-        document.getElementById(spanId).style.display = "block";
-        return false;
-    }
-    document.getElementById(spanId).innerHTML = "";
-    return true;
-};
 
